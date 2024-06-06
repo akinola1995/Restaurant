@@ -5,13 +5,15 @@ const Cart = () => {
     const [cart, setCart] = useState({ items: [], totalPrice: 0 });
 
     useEffect(() => {
-        axios.get('/api/cart')
-            .then(response => setCart(response.data));
+        axios.get('http://localhost:8080/api/cart')
+            .then(response => setCart(response.data))
+            .catch(error => console.error('Error fetching cart:', error));
     }, []);
 
     const checkout = () => {
-        axios.post('/api/cart/checkout')
-            .then(() => setCart({ items: [], totalPrice: 0 }));
+        axios.post('http://localhost:8080/api/cart/checkout')
+            .then(() => setCart({ items: [], totalPrice: 0 }))
+            .catch(error => console.error('Error during checkout:', error));
     };
 
     return (

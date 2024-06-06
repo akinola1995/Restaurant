@@ -5,8 +5,9 @@ const Restaurant = () => {
     const [restaurant, setRestaurant] = useState({});
 
     useEffect(() => {
-        axios.get('/api/restaurant')
-            .then(response => setRestaurant(response.data));
+        axios.get('http://localhost:8080/api/restaurant')
+            .then(response => setRestaurant(response.data))
+            .catch(error => console.error('Error fetching restaurant:', error));
     }, []);
 
     return (

@@ -5,12 +5,15 @@ const Menu = () => {
     const [menu, setMenu] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/restaurant/menu')
-            .then(response => setMenu(response.data));
+        axios.get('http://localhost:8080/api/restaurant/menu')
+            .then(response => setMenu(response.data))
+            .catch(error => console.error('Error fetching menu:', error));
     }, []);
 
     const addToCart = (dishId) => {
-        axios.post(`/api/cart/add/${dishId}`);
+        axios.post(`http://localhost:8080/api/cart/add/${dishId}`)
+            .then(response => console.log('Dish added to cart:', response))
+            .catch(error => console.error('Error adding to cart:', error));
     };
 
     return (
