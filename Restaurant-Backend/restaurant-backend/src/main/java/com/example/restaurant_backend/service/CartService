@@ -1,0 +1,26 @@
+package com.example.restaurant_backend.service;
+
+import com.example.restaurant_backend.model.Cart;
+import com.example.restaurant_backend.model.Dish;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class CartService {
+    private List<Dish> cartItems = new ArrayList<>();
+
+    public void addToCart(Dish dish) {
+        cartItems.add(dish);
+    }
+
+    public Cart getCart() {
+        double totalPrice = cartItems.stream().mapToDouble(Dish::getPrice).sum();
+        return new Cart(cartItems, totalPrice);
+    }
+
+    public void clearCart() {
+        cartItems.clear();
+    }
+}

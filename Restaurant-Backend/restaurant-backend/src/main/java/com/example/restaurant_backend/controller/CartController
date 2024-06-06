@@ -1,0 +1,37 @@
+package com.example.restaurant_backend.controller;
+
+import com.example.restaurant_backend.model.Cart;
+import com.example.restaurant_backend.model.Dish;
+import com.example.restaurant_backend.service.CartService;
+import com.example.restaurant_backend.service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/cart")
+public class CartController {
+
+    @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @PostMapping("/add/{dishId}")
+    public void addToCart(@PathVariable String dishId) {
+        Dish dish = restaurantService.getMenu().stream().filter(d -> d.getId().equals(dishId)).findFirst().orElse(null);
+        if (dish != null) {
+            cartService.addToCart(dish);
+        }
+    }
+
+    @GetMapping
+    public Cart getCart() {
+        return cartService.getCart();
+    }
+
+    @PostMapping("/checkout")
+    public void checkout() {
+        cartService.clearCart();
+    }
+}
